@@ -11,13 +11,24 @@ def main():
     print("Enter latest to download the latest comic")
     print("Enter anything else to exit")
 
+    # Checking the latest comic's id number 
+    
+    latest = "http://explosm.net/comics/latest/"
+    soup = BeautifulSoup(requests.get(latest).content,"html.parser")
+    for x in soup.findAll("a"):
+        if x.has_attr("data-slug"):
+            latest = x["data-slug"][6:]
+
+
+
     # Asking the user what action they want to perform
 
     user_input = input(">>>").lower()
     if user_input == "number":
         comic_no = input("Enter comic number")
     elif user_input == "random":
-        comic_no = str(random.randint(1,4180))
+
+        comic_no = str(random.randint(1,int(latest)))
     elif user_input == "latest":
 
         comic_no = "latest"
